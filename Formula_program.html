@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SUPRA Formula Car Design & Development Internship | ARC Global</title>
+<style>
+
+@font-face { font-family: 'ArchivoBlack'; src: url('fonts/ArchivoBlack-Regular.ttf') format('truetype'); font-weight: 900; }
+@font-face { font-family: 'Oswald'; src: url('fonts/Oswald-Bold.ttf') format('truetype'); font-weight: 100 700; }
+@font-face { font-family: 'Inter'; src: url('fonts/Inter-Variable.ttf') format('truetype'); font-weight: 100 900; }
+@font-face { font-family: 'JetBrainsMono'; src: url('fonts/JetBrainsMono-Bold.ttf') format('truetype'); font-weight: 100 800; }
+
+:root{
+  --ink: #0B0B0D;
+  --panel: #17181C;
+  --panel-2: #1F2024;
+  --paper: #F4F2EC;
+  --paper-dim: #C7C4BA;
+  --red: #FF3B1F;
+  --red-deep: #C8240F;
+  --olive: #9CA38B;
+  --line: #34353B;
+  --mono: 'JetBrainsMono', monospace;
+}
+
+*{ margin:0; padding:0; box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+
+body{
+  background: var(--ink);
+  color: var(--paper);
+  font-family: 'Inter', sans-serif;
+  padding-bottom: 96px; /* space for sticky CTA */
+}
+
+a{ text-decoration:none; color:inherit; }
+
+.bg-grid{
+  position:fixed; inset:0;
+  background-image:
+    linear-gradient(rgba(244,242,236,0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(244,242,236,0.035) 1px, transparent 1px);
+  background-size: 36px 36px;
+  z-index:0; pointer-events:none;
+}
+
+.wrap{ max-width: 920px; margin: 0 auto; position:relative; z-index:1; padding: 0 28px; }
+
+/* ===== topbar ===== */
+.topbar{
+  display:flex; justify-content:space-between; align-items:center;
+  padding: 28px 0 0 0;
+}
+.topbar .eyebrow{
+  font-family:'Oswald'; font-weight:600; font-size: 13px;
+  letter-spacing: 0.28em; text-transform:uppercase; color: var(--olive);
+}
+.topbar .reg-tag{
+  font-family: var(--mono); font-size: 12px; letter-spacing:0.06em;
+  color: var(--paper-dim); border: 1px solid var(--line); padding: 6px 12px;
+  white-space:nowrap;
+}
+.reg-tag b{ color: var(--red); }
+
+/* ===== hero ===== */
+.hero{ position:relative; padding-top: 18px; }
+
+.stripe-wrap{ position:absolute; top: 30px; left:-28px; right:-28px; height: 230px; z-index:0; overflow:hidden; }
+.stripe{
+  position:absolute; top: 0; left: -10%; width: 130%; height: 120px;
+  background: var(--red); transform: skewY(-3.2deg);
+  box-shadow: 0 14px 44px rgba(255,59,31,0.3);
+}
+.stripe-check{
+  position:absolute; left:0; right:0; bottom:-10px; height:10px;
+  background-image: repeating-linear-gradient(45deg, var(--ink) 0 10px, transparent 10px 20px);
+}
+
+.kicker-row{ position:relative; z-index:2; display:flex; align-items:baseline; gap:12px; padding-top: 30px; flex-wrap:wrap; }
+.kicker-row .powered{ font-family:'Oswald'; font-weight:700; font-size:15px; letter-spacing:0.08em; color: var(--paper); }
+.kicker-row .by{ font-family:'Inter'; font-weight:500; font-size:12.5px; color: var(--ink); background: var(--paper); padding: 3px 9px; }
+
+.titleblock{ position:relative; z-index:2; margin-top: 8px; }
+.titleblock h1{
+  font-family:'ArchivoBlack'; font-size: 11vw; line-height: 1.02;
+  color: var(--paper); text-transform: uppercase; letter-spacing: -0.005em;
+}
+@media (min-width: 600px){ .titleblock h1{ font-size: 72px; } }
+.titleblock h1 .hl{ color: var(--ink); background: var(--paper); padding: 0px 10px 4px 10px; display:inline-block; }
+.titleblock .sub{
+  margin-top: 18px; font-family:'Oswald'; font-weight:500; font-size: 16px;
+  letter-spacing:0.02em; color: var(--paper-dim); max-width: 620px; line-height:1.5;
+}
+@media (min-width: 600px){ .titleblock .sub{ font-size: 18px; } }
+
+/* ===== stat chips ===== */
+.statrow{
+  position:relative; z-index:2;
+  display:grid; grid-template-columns: repeat(2,1fr); gap: 12px;
+  margin-top: 28px;
+}
+@media (min-width: 600px){ .statrow{ grid-template-columns: repeat(4,1fr); } }
+.stat{
+  background: var(--panel); border:1px solid var(--line); border-top:3px solid var(--red);
+  padding: 16px 14px;
+}
+.stat .n{ font-family:'ArchivoBlack'; font-size: 30px; color: var(--paper); }
+.stat .l{ font-family:'Oswald'; font-weight:600; font-size:11.5px; letter-spacing:0.06em; text-transform:uppercase; color:var(--olive); margin-top:4px; }
+
+/* ===== CTA button (inline, in-flow) ===== */
+.cta-inline{
+  position:relative; z-index:2; margin-top: 30px;
+}
+.btn{
+  display:inline-flex; align-items:center; gap:12px;
+  background: var(--red); color: var(--paper);
+  font-family:'Oswald'; font-weight:700; font-size:17px; letter-spacing:0.04em; text-transform:uppercase;
+  padding: 17px 28px; border: none; cursor:pointer;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+.btn:hover{ background: var(--red-deep); }
+.btn:active{ transform: scale(0.98); }
+.btn .arrow{ font-family:'Inter'; font-weight:800; font-size:19px; }
+.cta-note{
+  margin-top:12px; font-family: var(--mono); font-size:13px; color: var(--paper-dim); letter-spacing:0.02em;
+}
+
+/* ===== section label ===== */
+.seclabel{
+  display:flex; align-items:center; gap:14px;
+  margin: 64px 0 22px 0;
+}
+.seclabel .num{ font-family: var(--mono); font-size:15px; color: var(--red); font-weight:700; }
+.seclabel .txt{ font-family:'Oswald'; font-weight:700; font-size:21px; letter-spacing:0.08em; text-transform:uppercase; color: var(--paper); }
+.seclabel .rule{ flex:1; height:1px; background: var(--line); }
+
+/* ===== overview cards ===== */
+.overview-grid{
+  display:grid; grid-template-columns: 1fr; gap:14px;
+}
+@media (min-width: 600px){ .overview-grid{ grid-template-columns: 1fr 1fr; } }
+.ocard{
+  background: var(--panel); border:1px solid var(--line); padding: 22px 22px;
+}
+.ocard .ic{ font-size: 22px; line-height:1; }
+.ocard h4{ font-family:'Oswald'; font-weight:700; font-size:16.5px; margin-top:10px; color:var(--paper); text-transform:uppercase; letter-spacing:0.01em; }
+.ocard p{ font-family:'Inter'; font-size:14.5px; line-height:1.55; color:var(--paper-dim); margin-top:8px; }
+
+/* ===== journey ===== */
+.journey{ display:flex; flex-wrap:wrap; gap: 14px; }
+.jstep{
+  flex: 1 1 150px;
+  background: var(--panel-2); border:1px solid var(--line); border-top:3px solid var(--red);
+  padding: 16px 14px;
+}
+.jstep .jn{ font-family: var(--mono); font-size:12px; color:var(--olive); }
+.jstep h5{ font-family:'Oswald'; font-weight:700; font-size:14px; color:var(--paper); margin-top:6px; text-transform:uppercase; line-height:1.25; }
+.journey-desc{
+  margin-top: 18px; font-family:'Inter'; font-size:14.5px; line-height:1.6; color:var(--paper-dim);
+  background: var(--panel); border:1px solid var(--line); padding:18px 20px;
+}
+
+/* ===== modules accordion-style list ===== */
+.modgrid{ display:grid; grid-template-columns: 1fr; gap: 12px; }
+@media (min-width: 600px){ .modgrid{ grid-template-columns: 1fr 1fr; } }
+.modcard{
+  background: var(--panel); border:1px solid var(--line); padding: 18px 20px; position:relative;
+}
+.modcard .mnum{ font-family:'ArchivoBlack'; font-size:22px; color: var(--line); position:absolute; top:14px; right:16px; }
+.modcard h5{ font-family:'Oswald'; font-weight:700; font-size:15.5px; color:var(--paper); text-transform:uppercase; max-width:80%; line-height:1.3; }
+.modcard ul{ margin-top:10px; padding-left:18px; }
+.modcard li{ font-family:'Inter'; font-size:13.5px; color:var(--paper-dim); line-height:1.5; margin-bottom:3px; }
+
+/* ===== apply checklist ===== */
+.applygrid{ display:grid; grid-template-columns: 1fr; gap:12px; }
+@media (min-width: 600px){ .applygrid{ grid-template-columns: 1fr 1fr; } }
+.applycard{ display:flex; gap:14px; align-items:flex-start; background:var(--panel); border:1px solid var(--line); padding:16px 18px; }
+.applycard .ic{ font-size:20px; flex-shrink:0; }
+.applycard .ic.num{ font-family:'ArchivoBlack'; font-size:20px; color:var(--red); width:26px; }
+.applycard h6{ font-family:'Oswald'; font-weight:700; font-size:14.5px; text-transform:uppercase; color:var(--paper); }
+.applycard p{ font-family:'Inter'; font-size:13.5px; color:var(--paper-dim); margin-top:5px; line-height:1.5; }
+.applycard p:only-child{ margin-top:0; }
+
+/* ===== terms ===== */
+.termslist{ display:flex; flex-direction:column; gap:10px; }
+.termitem{ display:flex; gap:14px; align-items:flex-start; padding: 14px 0; border-bottom:1px solid var(--line); }
+.termitem:last-child{ border-bottom:none; }
+.termitem .ic{ font-size:17px; flex-shrink:0; }
+.termitem .t{ font-family:'Inter'; font-size:14px; line-height:1.55; color:var(--paper-dim); }
+.termitem .t b{ font-family:'Oswald'; font-weight:700; color:var(--paper); text-transform:uppercase; font-size:13.5px; letter-spacing:0.02em; display:block; margin-bottom:4px; }
+
+/* ===== final CTA block ===== */
+.finalcta{
+  margin-top: 70px; text-align:center;
+  background: linear-gradient(155deg, var(--red) 0%, var(--red-deep) 100%);
+  padding: 52px 28px; position:relative; overflow:hidden;
+}
+.finalcta::before{
+  content:''; position:absolute; inset:0;
+  background-image: repeating-linear-gradient(45deg, rgba(0,0,0,0.06) 0 2px, transparent 2px 14px);
+}
+.finalcta h2{
+  position:relative; font-family:'ArchivoBlack'; font-size: 38px; line-height:1.08;
+  text-transform:uppercase; color: var(--paper);
+}
+@media (min-width: 600px){ .finalcta h2{ font-size: 50px; } }
+.finalcta p{
+  position:relative; font-family:'Oswald'; font-weight:500; font-size:16px; color: rgba(255,255,255,0.92);
+  margin-top:14px; max-width:480px; margin-left:auto; margin-right:auto;
+}
+.finalcta .btn-light{
+  position:relative; display:inline-flex; align-items:center; gap:12px; margin-top:28px;
+  background: var(--paper); color: var(--ink);
+  font-family:'Oswald'; font-weight:700; font-size:17px; letter-spacing:0.04em; text-transform:uppercase;
+  padding: 18px 30px; transition: transform 0.1s ease;
+}
+.finalcta .btn-light:active{ transform: scale(0.98); }
+
+/* ===== footer ===== */
+.footer{ margin-top: 56px; background: var(--paper); color: var(--ink); }
+.footer-inner{
+  display:flex; flex-direction:column; gap:18px;
+  padding: 30px 0;
+  max-width: 920px; margin:0 auto; padding-left:28px; padding-right:28px;
+}
+@media (min-width: 700px){ .footer-inner{ flex-direction:row; align-items:center; justify-content:space-between; } }
+.footer .logowrap{ display:flex; align-items:center; gap:16px; }
+.footer .logowrap img{ height: 40px; }
+.footer .logowrap .div{ width:1.5px; height:34px; background:#cfccc2; }
+.footer .logowrap .tagline{ font-family:'Oswald'; font-weight:600; font-size:11.5px; letter-spacing:0.03em; color:#55534c; max-width:190px; line-height:1.3; text-transform:uppercase; }
+.footer .contacts{ display:flex; gap:24px; flex-wrap:wrap; }
+.contact-item{ display:flex; flex-direction:column; }
+.contact-item .l{ font-family:'Oswald'; font-weight:700; font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:#8a8779; }
+.contact-item .v{ font-family:var(--mono); font-weight:700; font-size:13px; color: var(--ink); margin-top:3px; }
+.contact-item .v.redv{ color: var(--red-deep); }
+.copyright{
+  text-align:center; font-family:var(--mono); font-size:11.5px; color: var(--paper-dim);
+  padding: 18px 0 4px 0; letter-spacing:0.03em;
+}
+
+/* ===== sticky bottom CTA ===== */
+.sticky-cta{
+  position: fixed; bottom:0; left:0; right:0; z-index: 50;
+  background: var(--ink); border-top: 1px solid var(--line);
+  display:flex; align-items:center; justify-content:space-between; gap:16px;
+  padding: 16px 22px;
+}
+.sticky-cta .info{ display:none; }
+@media (min-width: 600px){ .sticky-cta .info{ display:block; } }
+.sticky-cta .info .l{ font-family:'Oswald'; font-weight:700; font-size:13px; letter-spacing:0.04em; text-transform:uppercase; color:var(--paper); }
+.sticky-cta .info .d{ font-family:var(--mono); font-size:11.5px; color:var(--paper-dim); margin-top:2px; }
+.sticky-cta .btn{ padding: 14px 24px; font-size:15px; flex-shrink:0; width:100%; justify-content:center; }
+@media (min-width: 600px){ .sticky-cta .btn{ width:auto; } }
+
+</style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+
+<div class="wrap">
+  <a class="btn btn-light" href="./index.html">
+        Back to Home
+      </a>
+
+  <div class="topbar">
+    <div class="eyebrow">Engineering · Manufacturing · Motorsports</div>
+    <div class="reg-tag">STATUS: <b>OPEN</b></div>
+  </div>
+
+  <div class="hero">
+    <div class="stripe-wrap"><div class="stripe"><div class="stripe-check"></div></div></div>
+    <div class="kicker-row">
+      <div class="powered">FORMULA DESIGN &amp; DEVELOPMENT</div>
+      <div class="by">POWERED BY ARC GLOBAL</div>
+    </div>
+    <div class="titleblock">
+      <h1>FORMULA STUDENT<br><span class="hl">SUPRA SAE</span> PROGRAM</h1>
+      <div class="sub">Design, build, and race a small formula-style car — from concept through fabrication to real track testing. Internship cum training program. 100% offline.</div>
+    </div>
+
+    <div class="statrow">
+      <div class="stat"><div class="n">30</div><div class="l">Days Intensive</div></div>
+      <div class="stat"><div class="n">16</div><div class="l">Modules</div></div>
+      <div class="stat"><div class="n">15+15</div><div class="l">Design + Build</div></div>
+      <div class="stat"><div class="n">100%</div><div class="l">Offline</div></div>
+    </div>
+
+    <div class="cta-inline">
+      <a class="btn" href="https://pages.razorpay.com/supra2026" target="_blank" rel="noopener">
+        Register Now <span class="arrow">→</span>
+      </a>
+      
+      <div class="cta-note">pages.razorpay.com/supra2026</div>
+    </div>
+  </div>
+
+  <div class="seclabel"><div class="num">01</div><div class="txt">Program Overview</div><div class="rule"></div></div>
+  <div class="overview-grid">
+    <div class="ocard">
+      <div class="ic">🏎️</div>
+      <h4>What Is SUPRA?</h4>
+      <p>Formula Student (SUPRA SAE) is an international motorsport engineering competition. Teams design, build, and race a small formula-style car — tested in events like acceleration, skidpad, autocross &amp; endurance.</p>
+    </div>
+    <div class="ocard">
+      <div class="ic">🔧</div>
+      <h4>Program Format</h4>
+      <p>15 days of Design, Simulation &amp; Analysis + 15 days of Fabrication, Assembly &amp; Testing. 100% offline, fully hands-on workshop environment.</p>
+    </div>
+    <div class="ocard">
+      <div class="ic">📐</div>
+      <h4>Tools &amp; Skills</h4>
+      <p>CAD (3D modelling), CAE/FEA, vehicle dynamics analysis, CFD introduction, welding, machining, data acquisition, ECU basics, and real track testing.</p>
+    </div>
+    <div class="ocard">
+      <div class="ic">🏆</div>
+      <h4>Final Outcome</h4>
+      <p>Complete Formula vehicle build in a team — from concept design through fabrication to track testing. Final evaluation &amp; program certification included.</p>
+    </div>
+  </div>
+
+  <div class="seclabel"><div class="num">02</div><div class="txt">30-Day Program Structure</div><div class="rule"></div></div>
+  <div class="journey">
+    <div class="jstep"><div class="jn">PHASE 1 · DAYS 1–15</div><h5>Design, Simulation &amp; Analysis</h5></div>
+    <div class="jstep"><div class="jn">PHASE 2 · DAYS 16–30</div><h5>Fabrication, Assembly &amp; Testing</h5></div>
+  </div>
+  <div class="overview-grid" style="margin-top:14px;">
+    <div class="ocard">
+      <h4>Phase 1 Covers</h4>
+      <p>SUPRA rulebook &amp; vehicle architecture, vehicle dynamics, full CAD modelling, chassis &amp; suspension design, steering &amp; braking, powertrain, aerodynamics, and CAE/FEA structural simulation.</p>
+    </div>
+    <div class="ocard">
+      <h4>Phase 2 Covers</h4>
+      <p>Electrical systems &amp; wiring harness, sensors &amp; ECU basics, cutting/welding/machining, subsystem integration &amp; assembly, static &amp; track testing, costing, documentation, and team project execution.</p>
+    </div>
+  </div>
+
+  <div class="seclabel"><div class="num">03</div><div class="txt">Training Modules</div><div class="rule"></div></div>
+  <div class="modgrid">
+    <div class="modcard"><div class="mnum">01</div><h5>Intro to Formula Student</h5>
+      <ul><li>SUPRA rulebook &amp; design objectives</li><li>Vehicle architecture &amp; team workflow</li></ul></div>
+    <div class="modcard"><div class="mnum">02</div><h5>Vehicle Dynamics</h5>
+      <ul><li>Tire mechanics, load transfer &amp; weight distribution</li><li>Suspension geometry &amp; handling characteristics</li></ul></div>
+    <div class="modcard"><div class="mnum">03</div><h5>CAD &amp; Product Development</h5>
+      <ul><li>3D full-vehicle modelling</li><li>DFM, DFA &amp; assembly design workflow</li></ul></div>
+    <div class="modcard"><div class="mnum">04</div><h5>Chassis Design</h5>
+      <ul><li>Spaceframe design &amp; material optimization</li><li>Torsional rigidity &amp; driver ergonomics</li></ul></div>
+    <div class="modcard"><div class="mnum">05</div><h5>Suspension System</h5>
+      <ul><li>Double wishbone geometry</li><li>Camber/caster/toe, roll center &amp; spring-damper</li></ul></div>
+    <div class="modcard"><div class="mnum">06</div><h5>Steering System</h5>
+      <ul><li>Ackermann geometry &amp; steering ratio</li><li>Rack &amp; pinion integration &amp; feedback control</li></ul></div>
+    <div class="modcard"><div class="mnum">07</div><h5>Braking System</h5>
+      <ul><li>Brake force distribution &amp; master cylinder</li><li>Pedal box design &amp; safety redundancy</li></ul></div>
+    <div class="modcard"><div class="mnum">08</div><h5>Powertrain System</h5>
+      <ul><li>Engine/motor selection &amp; transmission</li><li>Differential, drivetrain &amp; cooling basics</li></ul></div>
+    <div class="modcard"><div class="mnum">09</div><h5>Aerodynamics</h5>
+      <ul><li>Drag &amp; downforce fundamentals</li><li>Aero package (wings, diffuser) &amp; CFD intro</li></ul></div>
+    <div class="modcard"><div class="mnum">10</div><h5>CAE &amp; Simulation</h5>
+      <ul><li>FEA structural analysis &amp; suspension simulation</li><li>Load cases, validation &amp; optimization</li></ul></div>
+    <div class="modcard"><div class="mnum">11</div><h5>Electrical &amp; Data Systems</h5>
+      <ul><li>Wiring harness &amp; sensors</li><li>ECU basics &amp; telemetry systems</li></ul></div>
+    <div class="modcard"><div class="mnum">12</div><h5>Manufacturing &amp; Fabrication</h5>
+      <ul><li>Cutting, bending, welding &amp; machining</li><li>Material handling &amp; workshop safety</li></ul></div>
+    <div class="modcard"><div class="mnum">13</div><h5>Assembly &amp; Integration</h5>
+      <ul><li>Subsystem integration &amp; alignment setup</li><li>Quality checks &amp; troubleshooting</li></ul></div>
+    <div class="modcard"><div class="mnum">14</div><h5>Testing &amp; Validation</h5>
+      <ul><li>Static tests: brake, tilt, noise</li><li>Track testing &amp; performance tuning</li></ul></div>
+    <div class="modcard"><div class="mnum">15</div><h5>Costing &amp; Documentation</h5>
+      <ul><li>Cost report &amp; design report preparation</li><li>Technical presentation &amp; judges Q&amp;A prep</li></ul></div>
+    <div class="modcard"><div class="mnum">16</div><h5>Team Management</h5>
+      <ul><li>Task allocation, timelines &amp; leadership</li><li>Real-world project workflow &amp; industry practices</li></ul></div>
+  </div>
+
+  <div class="seclabel"><div class="num">04</div><div class="txt">Final Project &amp; Outcomes</div><div class="rule"></div></div>
+  <div class="journey-desc" style="margin-top:0; margin-bottom:18px;">🏁 <b style="color:var(--paper); font-family:'Oswald'; text-transform:uppercase; letter-spacing:0.02em;">Final Project — Complete SUPRA Vehicle Build (Team-Based).</b> Participants work in teams to take a SUPRA car from concept design → CAD modelling → CAE simulation → fabrication → assembly → track testing. Final evaluation by program mentors with certification upon successful completion.</div>
+  <div class="applygrid">
+    <div class="applycard"><div class="ic num">01</div><div><p>Design a complete Formula Student car — chassis, suspension, steering, braking, powertrain &amp; aero.</p></div></div>
+    <div class="applycard"><div class="ic num">02</div><div><p>Run CAD models and CAE simulations to validate structural integrity and vehicle dynamics.</p></div></div>
+    <div class="applycard"><div class="ic num">03</div><div><p>Fabricate and assemble real vehicle components using welding, machining &amp; integration techniques.</p></div></div>
+    <div class="applycard"><div class="ic num">04</div><div><p>Conduct static &amp; dynamic testing including brake test, tilt test &amp; track performance validation.</p></div></div>
+    <div class="applycard"><div class="ic num">05</div><div><p>Prepare SUPRA-standard documentation: cost report, design report &amp; technical presentation.</p></div></div>
+    <div class="applycard"><div class="ic num">06</div><div><p>Work effectively in a motorsport engineering team with real project timelines and deliverables.</p></div></div>
+  </div>
+
+  <div class="seclabel"><div class="num">05</div><div class="txt">Who Should Apply?</div><div class="rule"></div></div>
+  <div class="applygrid">
+    <div class="applycard"><div class="ic">❤️</div><div><h6>Genuine Interest</h6><p>Passion for motorsport engineering, Formula Student, and vehicle design.</p></div></div>
+    <div class="applycard"><div class="ic">🎓</div><div><h6>Career Focus</h6><p>Pursuing a career in automotive/motorsport design, dynamics, or fabrication.</p></div></div>
+    <div class="applycard"><div class="ic">📚</div><div><h6>Basic Knowledge</h6><p>Foundational engineering understanding. No deep prior experience required.</p></div></div>
+    <div class="applycard"><div class="ic">⏰</div><div><h6>Full Commitment</h6><p>Attend all 30 days and actively engage in every design and workshop session.</p></div></div>
+    <div class="applycard"><div class="ic">💬</div><div><h6>Communication</h6><p>Sufficient proficiency in the language of instruction for class participation.</p></div></div>
+    <div class="applycard"><div class="ic">💻</div><div><h6>Tech Access</h6><p>Computer with internet access for course materials and digital resources.</p></div></div>
+  </div>
+
+  <div class="seclabel"><div class="num">06</div><div class="txt">Terms &amp; Conditions</div><div class="rule"></div></div>
+  <div class="termslist">
+    <div class="termitem"><div class="ic">📅</div><div class="t"><b>Program Schedule</b>30-day program. Participants must attend all sessions, workshops, and scheduled activities.</div></div>
+    <div class="termitem"><div class="ic">🤝</div><div class="t"><b>Code of Conduct</b>Professional and respectful behavior at all times. Discrimination or harassment results in immediate dismissal.</div></div>
+    <div class="termitem"><div class="ic">🔒</div><div class="t"><b>Confidentiality</b>All proprietary or sensitive information shared during the program must remain strictly confidential.</div></div>
+    <div class="termitem"><div class="ic">❌</div><div class="t"><b>Termination &amp; Fees</b>Organizers may terminate participation for misconduct. Fees are non-refundable in all cases.</div></div>
+    <div class="termitem"><div class="ic">📝</div><div class="t"><b>Amendments</b>Organizers may modify the schedule, content, or terms at any time. Participants will be notified in advance.</div></div>
+  </div>
+
+  <div class="finalcta">
+    <h2>Ready to Build Your<br>Formula Car?</h2>
+    <p>Register now and secure your seat in this 30-day intensive Formula Student program.</p>
+    <a class="btn-light" href="https://pages.razorpay.com/supra2026" target="_blank" rel="noopener">Register Now →</a>
+  </div>
+
+</div>
+
+<div class="footer">
+  <div class="footer-inner">
+    <div class="logowrap">
+      <img src="./ARC_LOGO.jpeg" alt="ARC Global">
+      <div class="div"></div>
+      <div class="tagline">We don't simply manufacture vehicles. We build engineers.</div>
+    </div>
+    <div class="contacts">
+      <div class="contact-item"><div class="l">Email</div><div class="v">achillesracingclubindia@gmail.com</div></div>
+      <div class="contact-item"><div class="l">Call</div><div class="v redv">+91 88002 19630</div></div>
+      <div class="contact-item"><div class="l">Web</div><div class="v">pages.razorpay.com/supra2026</div></div>
+    </div>
+  </div>
+  <div class="copyright">© ARC Global — All Rights Reserved</div>
+</div>
+
+<div class="sticky-cta">
+  <div class="info">
+    <div class="l">SUPRA Internship · 30 Days</div>
+    <div class="d">achillesracingclubindia@gmail.com · +91 88002 19630</div>
+  </div>
+  <a class="btn" href="https://pages.razorpay.com/supra2026" target="_blank" rel="noopener">Register Now →</a>
+</div>
+
+</body>
+</html>
